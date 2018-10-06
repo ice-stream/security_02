@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yhhz.mapper.FaceLibraryMapper" >
+  <resultMap id="BaseResultMap" type="com.yhhz.pojo.FaceLibrary" >
+    <id column="Fl_id" property="flId" jdbcType="BIGINT" />
+    <result column="Fl_date" property="flDate" jdbcType="TIMESTAMP" />
+    <result column="User_id" property="userId" jdbcType="BIGINT" />
+    <result column="Fl_FaceGraphics" property="flFacegraphics" jdbcType="VARCHAR" />
+    <result column="User_name" property="userName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Fl_id, Fl_date, User_id, Fl_FaceGraphics, User_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from facelibrary
+    where Fl_id = #{flId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from facelibrary
+    where Fl_id = #{flId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yhhz.pojo.FaceLibrary" >
+    insert into facelibrary (Fl_id, Fl_date, User_id, 
+      Fl_FaceGraphics, User_name)
+    values (#{flId,jdbcType=BIGINT}, #{flDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, 
+      #{flFacegraphics,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhhz.pojo.FaceLibrary" >
+    insert into facelibrary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="flId != null" >
+        Fl_id,
+      </if>
+      <if test="flDate != null" >
+        Fl_date,
+      </if>
+      <if test="userId != null" >
+        User_id,
+      </if>
+      <if test="flFacegraphics != null" >
+        Fl_FaceGraphics,
+      </if>
+      <if test="userName != null" >
+        User_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="flId != null" >
+        #{flId,jdbcType=BIGINT},
+      </if>
+      <if test="flDate != null" >
+        #{flDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="flFacegraphics != null" >
+        #{flFacegraphics,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yhhz.pojo.FaceLibrary" >
+    update facelibrary
+    <set >
+      <if test="flDate != null" >
+        Fl_date = #{flDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        User_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="flFacegraphics != null" >
+        Fl_FaceGraphics = #{flFacegraphics,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        User_name = #{userName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Fl_id = #{flId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yhhz.pojo.FaceLibrary" >
+    update facelibrary
+    set Fl_date = #{flDate,jdbcType=TIMESTAMP},
+      User_id = #{userId,jdbcType=BIGINT},
+      Fl_FaceGraphics = #{flFacegraphics,jdbcType=VARCHAR},
+      User_name = #{userName,jdbcType=VARCHAR}
+    where Fl_id = #{flId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+   select * from  facelibrary ORDER BY Fl_date
+  </select>
+  
+  
+  
+  <!--批量删除-->
+    <!--DELETE FROM hscs_itf_defination_lines WHERE HEADER_ID in(15,16);-->
+    <delete id="deleteBatch" parameterType="java.util.List">
+        DELETE from facelibrary where Fl_id in
+        <foreach collection="del_ids" item="id"
+                 open="(" close=")" index="index" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</mapper>
